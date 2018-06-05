@@ -16,8 +16,18 @@ namespace JS_SQL_Database.Models
         public List<Student> StudentsAttending { get; set; }
         public List<Assignment> Assignments { get; set; }
 
+
         public Course()
         {
+
+        }
+
+
+        public Course(string id, string _name, Teacher _teaching)
+        {
+            CourseId = id;
+            Name = _name;
+            Teaching = _teaching;
             StudentsAttending = new List<Student>();
             Assignments = new List<Assignment>();
         }

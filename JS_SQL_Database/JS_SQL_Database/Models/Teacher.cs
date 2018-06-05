@@ -9,7 +9,6 @@ namespace JS_SQL_Database.Models
 {
     public class Teacher : SchoolData
     {
-        [Key]
         public int Id { get; set; }
         public string Name { get; set; }
 

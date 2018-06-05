@@ -12,8 +12,8 @@ namespace JS_SQL_Database.Controllers
         // GET: Home
         public ActionResult Index()
         {
-
-            //DataHandler.AddData();
+            //DataHandler.EmptyData();
+            DataHandler.AddData();
 
             return View();
         }
