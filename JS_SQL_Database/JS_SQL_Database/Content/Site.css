@@ -16,3 +16,12 @@ textarea {
     max-width: 280px;
 }
 
+.wrapper {
+    display: flex;
+}
+
+
+div {
+    /*padding: 10px;*/
+    /*border: 1px solid black;*/
+}

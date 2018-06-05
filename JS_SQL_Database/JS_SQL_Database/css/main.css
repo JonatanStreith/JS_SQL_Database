@@ -1,0 +1,31 @@
+﻿
+#outputfield {
+    position: relative;
+    width: 100%;
+    float: right;
+}
+
+#wrapper {
+    display: flex;
+}
+
+
+.div {
+    padding: 10px;
+    border: 1px solid black;
+}
+
+#result_output {
+    empty-cells: show;
+}
+
+/*.btn{
+    margin-top: 10px;
+}*/
+
+#People_List td{
+    padding: 10px;
+}
+
+
+

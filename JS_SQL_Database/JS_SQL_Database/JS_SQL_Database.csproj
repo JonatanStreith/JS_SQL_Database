@@ -146,6 +146,10 @@
     <Content Include="Views\Shared\PV_Table.cshtml" />
     <Content Include="Views\Shared\PV_Student.cshtml" />
     <Content Include="Views\Shared\PV_StudentTitle.cshtml" />
+    <Content Include="Views\Shared\PV_Teacher.cshtml" />
+    <Content Include="Views\Shared\PV_TeacherTitle.cshtml" />
+    <Content Include="Views\Shared\PV_Course.cshtml" />
+    <Content Include="Views\Shared\PV_CourseTitle.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

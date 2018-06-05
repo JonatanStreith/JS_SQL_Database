@@ -24,6 +24,9 @@
         {
             var teachers = context.Teachers.ToList();
 
+            Html.RenderPartial("PV_TeacherTitle");
+
+
             foreach (var item in teachers)
             {
                 Html.RenderPartial("PV_Teacher", item);
@@ -34,6 +37,9 @@
         {
             var assignments = context.Assignments.ToList();
 
+            Html.RenderPartial("PV_AssignmentTitle");
+
+
             foreach (var item in assignments)
             {
                 Html.RenderPartial("PV_Assignment", item);
@@ -43,6 +49,9 @@
         else if (Model == "Courses")
         {
             var courses = context.Courses.ToList();
+
+            Html.RenderPartial("PV_CourseTitle");
+
 
             foreach (var item in courses)
             {
