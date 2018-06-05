@@ -55,11 +55,33 @@ namespace JS_SQL_Database.Models
                     }
                 }
 
+                context.SaveChanges();
 
 
 
             }
         }
+
+
+        //public static List<object> RetrieveData(string request)
+        //{
+
+        //    List<object> output = new List<object>();
+
+        //    using (var context = new SchoolContext())
+        //    {
+
+        //        if (request == "Students")
+        //        {
+        //            output = context.Students.ToList();
+        //        }
+
+
+
+        //    }
+
+        //    return something;
+        //} 
 
 
     }

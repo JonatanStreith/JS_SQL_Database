@@ -1,0 +1,65 @@
+﻿@model string
+@using JS_SQL_Database.Models
+
+
+
+@{
+
+    using (var context = new SchoolContext())
+    {
+
+        if (Model == "Students")
+        {
+            var students = context.Students.ToList();
+
+            Html.RenderPartial("PV_StudentTitle");
+
+            foreach (var item in students)
+            {
+                Html.RenderPartial("PV_Student", item);
+            }
+        }
+
+        else if (Model == "Teachers")
+        {
+            var teachers = context.Teachers.ToList();
+
+            foreach (var item in teachers)
+            {
+                Html.RenderPartial("PV_Teacher", item);
+            }
+        }
+
+        else if (Model == "Assignments")
+        {
+            var assignments = context.Assignments.ToList();
+
+            foreach (var item in assignments)
+            {
+                Html.RenderPartial("PV_Assignment", item);
+            }
+        }
+
+        else if (Model == "Courses")
+        {
+            var courses = context.Courses.ToList();
+
+            foreach (var item in courses)
+            {
+                Html.RenderPartial("PV_Course", item);
+            }
+        }
+        else { }
+
+
+
+
+    }
+
+
+
+
+
+
+
+}

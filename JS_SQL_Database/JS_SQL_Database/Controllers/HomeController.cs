@@ -13,9 +13,45 @@ namespace JS_SQL_Database.Controllers
         public ActionResult Index()
         {
 
-            DataHandler.AddData();
+            //DataHandler.AddData();
 
             return View();
         }
+
+
+        public ActionResult DisplayData()
+        {
+
+
+
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult RequestData(string pressedButton)
+        {
+
+            //List<SchoolData> retrievedData = DataHandler.RetrieveData(buttonPressed);
+
+            return PartialView("PV_Table", pressedButton);
+        }
+
+
+
+
+
+
+
+
+
+
+        public ActionResult EnterData()
+        {
+
+
+            return View();
+        }
+
+
     }
 }

@@ -6,7 +6,7 @@ using System.Web;
 
 namespace JS_SQL_Database.Models
 {
-    public class Assignment
+    public class Assignment : SchoolData
     {
         [Key]
         public string Id { get; set; }
