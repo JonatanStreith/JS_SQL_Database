@@ -48,14 +48,24 @@ namespace JS_SQL_Database.Models
 
 
             List<Course> courses = new List<Course> {
-            new Course("MA101", "Math", teachers.Find(x => x.Name.Equals("Mr Norris"))) ,
-            new Course("PH503", "Geophysics", teachers.Find(x => x.Name.Equals("Miss Cheerilee"))),
-            new Course("LU101", "Lunch", teachers.Find(x => x.Name.Equals("Hagrid"))),
-            new Course("HI101", "History", teachers.Find(x => x.Name.Equals("Dean Bitterman"))),
-            new Course("RE306", "Underwater basket weaving", teachers.Find(x => x.Name.Equals("Onizuka")))
+            new Course("MA101", "Math", teachers.Find(x => x.Name.Equals("Mr Norris")), assignments.FindAll(x => x.Field.Equals("Math"))) ,
+            new Course("PH503", "Geophysics", teachers.Find(x => x.Name.Equals("Miss Cheerilee")), assignments.FindAll(x => x.Field.Equals("Geophysics"))),
+            new Course("LU101", "Lunch", teachers.Find(x => x.Name.Equals("Hagrid")), assignments.FindAll(x => x.Field.Equals("Lunch"))),
+            new Course("HI101", "History", teachers.Find(x => x.Name.Equals("Dean Bitterman")), assignments.FindAll(x => x.Field.Equals("History"))),
+            new Course("RE306", "Underwater basket weaving", teachers.Find(x => x.Name.Equals("Onizuka")), assignments.FindAll(x => x.Field.Equals("Underwater basket weaving")))
             };
 
 
+
+
+            foreach (Course c in courses)
+            {
+                foreach (Student s in students)
+                {
+                    c.StudentsAttending.Add(s);
+                    s.ListOfCourses.Add(c);
+                }
+            }
 
 
 
@@ -150,7 +160,7 @@ namespace JS_SQL_Database.Models
 
 
 
-        
+
         }
 
         public static void EmptyData()

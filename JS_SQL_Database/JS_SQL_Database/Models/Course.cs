@@ -23,13 +23,13 @@ namespace JS_SQL_Database.Models
         }
 
 
-        public Course(string id, string _name, Teacher _teaching)
+        public Course(string _id, string _name, Teacher _teaching, List<Assignment> _assignments)
         {
-            CourseId = id;
+            CourseId = _id;
             Name = _name;
             Teaching = _teaching;
             StudentsAttending = new List<Student>();
-            Assignments = new List<Assignment>();
+            Assignments = _assignments;
         }
 
     }

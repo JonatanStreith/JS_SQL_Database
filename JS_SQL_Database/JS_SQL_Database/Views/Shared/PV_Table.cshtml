@@ -10,6 +10,7 @@
 
         if (Model == "Students")
         {
+
             var students = context.Students.ToList();
 
             Html.RenderPartial("PV_StudentTitle");
@@ -48,7 +49,11 @@
 
         else if (Model == "Courses")
         {
-            var courses = context.Courses.ToList();
+
+
+            var courses = context.Courses.Include("Teaching").ToList();
+
+
 
             Html.RenderPartial("PV_CourseTitle");
 

@@ -52,6 +52,14 @@ namespace JS_SQL_Database.Controllers
             return View();
         }
 
+        [HttpPost]
+        public ActionResult AddStudent()
+        {
+
+
+            return View("EnterData");
+        }
+
 
     }
 }
