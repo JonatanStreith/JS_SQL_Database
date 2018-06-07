@@ -1,0 +1,22 @@
+﻿@model List<JS_SQL_Database.Models.Teacher>
+@using JS_SQL_Database.Models
+
+
+<div class="col-lg-8 col-md-8">
+
+    <span class="col-lg-4 col-md-4">Teacher Id</span>
+    <span class="col-lg-6 col-md-6">Teacher Name</span>
+</div>
+<hr />
+@{
+    foreach (Teacher t in Model)
+    {
+
+        <div class="col-lg-8 col-md-8">
+            <br />
+            <span class="col-lg-4 col-md-4" id="id">@t.Id</span>
+            <span class="col-lg-6 col-md-6" id="name">@t.Name</span>
+        </div>
+
+    }
+}

@@ -1,0 +1,44 @@
+﻿@model List<JS_SQL_Database.Models.Course>
+@using JS_SQL_Database.Models
+
+
+<div class="col-lg-8 col-md-8">
+    <span class="col-lg-3 col-md-3">Course Id</span>
+    <span class="col-lg-3 col-md-3">Course Name</span>
+    <span class="col-lg-3 col-md-3">Teacher</span>
+</div>
+
+<hr />
+
+@{
+    foreach (Course c in Model)
+    {
+<div class="col-lg-8 col-md-8">
+    <span class="col-lg-3 col-md-3" id="id">@c.Id</span>
+    <span class="col-lg-3 col-md-3" id="id">@c.CourseId</span>
+    <span class="col-lg-3 col-md-3" id="name">@c.Name</span>
+
+
+    @{
+        if (c.Teaching == null)
+        {
+            <span class="col-lg-3 col-md-3" id="teacher">
+                Teacher not assigned.
+            </span>
+        }
+
+        else
+        {
+
+            <span class="col-lg-3 col-md-3" id="teacher">
+                @c.Teaching.Name
+            </span>
+
+
+        }
+    }
+
+
+</div>
+    }
+}

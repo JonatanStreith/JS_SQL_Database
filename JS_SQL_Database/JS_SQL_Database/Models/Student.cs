@@ -11,11 +11,12 @@ namespace JS_SQL_Database.Models
         public int Id { get; set; }
         public string Name { get; set; }
         public List<Course> ListOfCourses { get; set; }
-
+        public List<Assignment> ListOfAssignments { get; set; }
 
         public Student()
         {
             ListOfCourses = new List<Course>();
+            ListOfAssignments = new List<Assignment>();
         }
     }
 }

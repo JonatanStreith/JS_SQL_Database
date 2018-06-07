@@ -15,35 +15,35 @@ namespace JS_SQL_Database.Models
             //First, generate lists of objects!
 
             List<Student> students = new List<Student> {
-            new Student() { Id = 1, Name = "Steve" },
-            new Student() { Id = 2, Name = "Beth" },
-            new Student() { Id = 3, Name = "Dave" },
-            new Student() { Id = 4, Name = "Greg" },
-            new Student() { Id = 5, Name = "Kojiro" },
-            new Student() { Id = 6, Name = "Fizzlepop" },
-            new Student() { Id = 7, Name = "Slagathor" }
+            new Student() { Name = "Steve" },
+            new Student() { Name = "Beth" },
+            new Student() { Name = "Dave" },
+            new Student() { Name = "Greg" },
+            new Student() { Name = "Kojiro" },
+            new Student() { Name = "Fizzlepop" },
+            new Student() { Name = "Slagathor" }
             };
 
             List<Teacher> teachers = new List<Teacher> {
-            new Teacher() { Id = 1, Name = "Mr Norris" },
-            new Teacher() { Id = 2, Name = "Miss Cheerilee" },
-            new Teacher() { Id = 3, Name = "Hagrid" },
-            new Teacher() { Id = 5, Name = "Dean Bitterman" },
-            new Teacher() { Id = 4, Name = "Onizuka" }
+            new Teacher() { Name = "Mr Norris" },
+            new Teacher() { Name = "Miss Cheerilee" },
+            new Teacher() { Name = "Hagrid" },
+            new Teacher() { Name = "Dean Bitterman" },
+            new Teacher() { Name = "Onizuka" }
         };
 
 
             List<Assignment> assignments = new List<Assignment> {
-            new Assignment() { Id = "1", Name = "Complete page 5", Field = "Math" },
-            new Assignment() { Id = "2", Name = "Calculate the weight of the moon", Field = "Geophysics" },
-            new Assignment() { Id = "3", Name = "Essay: The Spanish Inquisition", Field = "History" },
-            new Assignment() { Id = "4", Name = "Eat Creme Brule", Field = "Lunch" },
-            new Assignment() { Id = "5", Name = "Interpretive dance: Watergate", Field = "History" },
-            new Assignment() { Id = "6", Name = "Add two values and then divide them", Field = "Math" },
-            new Assignment() { Id = "7", Name = "Bread and water", Field = "Lunch" },
-            new Assignment() { Id = "8", Name = "Essay: Why mountains are heavy", Field = "Geophysics" },
-            new Assignment() { Id = "9", Name = "Make a dog basket", Field = "Underwater basket weaving" },
-            new Assignment() { Id = "10", Name = "Make an ottoman", Field = "Underwater basket weaving" }
+            new Assignment() { Name = "Complete page 5", Field = "Math" },
+            new Assignment() { Name = "Calculate the weight of the moon", Field = "Geophysics" },
+            new Assignment() { Name = "Essay: The Spanish Inquisition", Field = "History" },
+            new Assignment() { Name = "Eat Creme Brule", Field = "Lunch" },
+            new Assignment() { Name = "Interpretive dance: Watergate", Field = "History" },
+            new Assignment() { Name = "Add two values and then divide them", Field = "Math" },
+            new Assignment() { Name = "Bread and water", Field = "Lunch" },
+            new Assignment() { Name = "Essay: Why mountains are heavy", Field = "Geophysics" },
+            new Assignment() { Name = "Make a dog basket", Field = "Underwater basket weaving" },
+            new Assignment() { Name = "Make an ottoman", Field = "Underwater basket weaving" }
         };
 
 
@@ -55,15 +55,25 @@ namespace JS_SQL_Database.Models
             new Course("RE306", "Underwater basket weaving", teachers.Find(x => x.Name.Equals("Onizuka")), assignments.FindAll(x => x.Field.Equals("Underwater basket weaving")))
             };
 
-
-
-
-            foreach (Course c in courses)
+            foreach (Assignment a in assignments)
             {
-                foreach (Student s in students)
+                a.BelongsToCourse = courses.Find(x => x.Name.Equals(a.Field));
+            }
+
+
+            foreach (Student s in students)
+            {
+                foreach (Course c in courses)
                 {
                     c.StudentsAttending.Add(s);
                     s.ListOfCourses.Add(c);
+
+                    foreach(Assignment a in c.Assignments)
+                    {
+                        s.ListOfAssignments.Add(a);
+                        a.StudentsWorking.Add(s);
+                    }
+                    //s.ListOfAssignments.AddRange(c.Assignments);
                 }
             }
 
@@ -73,15 +83,20 @@ namespace JS_SQL_Database.Models
             using (var context = new SchoolContext())
             {
 
+
+                foreach (Teacher teach in teachers)
+                {
+                    context.Teachers.Add(teach);
+                }
+
                 foreach (Student stud in students)
                 {
                     context.Students.Add(stud);
                 }
 
-
-                foreach (Teacher teach in teachers)
+                foreach (Course cour in courses)
                 {
-                    context.Teachers.Add(teach);
+                    context.Courses.Add(cour);
                 }
 
                 foreach (Assignment ass in assignments)
@@ -89,10 +104,7 @@ namespace JS_SQL_Database.Models
                     context.Assignments.Add(ass);
                 }
 
-                foreach (Course cour in courses)
-                {
-                    context.Courses.Add(cour);
-                }
+
 
 
                 context.SaveChanges();

@@ -143,15 +143,12 @@
     <Content Include="Scripts\jquery-1.10.2.min.map" />
     <Content Include="Views\Home\DisplayData.cshtml" />
     <Content Include="Views\Home\EnterData.cshtml" />
-    <Content Include="Views\Shared\PV_Table.cshtml" />
-    <Content Include="Views\Shared\PV_Student.cshtml" />
-    <Content Include="Views\Shared\PV_StudentTitle.cshtml" />
-    <Content Include="Views\Shared\PV_Teacher.cshtml" />
-    <Content Include="Views\Shared\PV_TeacherTitle.cshtml" />
-    <Content Include="Views\Shared\PV_Course.cshtml" />
-    <Content Include="Views\Shared\PV_CourseTitle.cshtml" />
-    <Content Include="Views\Shared\PV_Assignment.cshtml" />
-    <Content Include="Views\Shared\PV_AssignmentTitle.cshtml" />
+    <Content Include="Views\Shared\PV_Teachers.cshtml" />
+    <Content Include="Views\Shared\PV_Courses.cshtml" />
+    <Content Include="Views\Shared\PV_Assignments.cshtml" />
+    <Content Include="Views\Shared\PV_Students.cshtml" />
+    <Content Include="Views\Shared\PV_SpecificStudent.cshtml" />
+    <Content Include="Views\Home\Cheat.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

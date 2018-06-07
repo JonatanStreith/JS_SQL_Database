@@ -1,0 +1,45 @@
+﻿
+@{
+    ViewBag.Title = "Cheat";
+}
+
+<h2>Cheat</h2>
+
+
+@Ajax.ActionLink(linkText: "Clear database",
+           actionName: "ClearDatabase",
+           controllerName: "Home",
+           routeValues: new { },
+           ajaxOptions: new AjaxOptions
+           {
+   //UpdateTargetId = Model.Id,
+   //InsertionMode = InsertionMode.Replace,
+   HttpMethod = "post"
+
+           },
+
+           htmlAttributes: new { @class = "btn btn-default" }
+
+
+
+           )
+
+
+
+@Ajax.ActionLink(linkText: "Repopulate database",
+           actionName: "RepopulateDatabase",
+           controllerName: "Home",
+           routeValues: new { },
+           ajaxOptions: new AjaxOptions
+           {
+   //UpdateTargetId = Model.Id,
+   //InsertionMode = InsertionMode.Replace,
+   HttpMethod = "post"
+
+           },
+
+           htmlAttributes: new { @class = "btn btn-default" }
+
+
+
+           )

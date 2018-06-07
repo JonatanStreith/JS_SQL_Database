@@ -9,6 +9,7 @@ namespace JS_SQL_Database.Models
     public class Course : SchoolData
     {
         [Key]
+        public int Id { get; set; }
         public string CourseId { get; set; }
         public string Name { get; set; }
         public Teacher Teaching { get; set; }
@@ -30,6 +31,15 @@ namespace JS_SQL_Database.Models
             Teaching = _teaching;
             StudentsAttending = new List<Student>();
             Assignments = _assignments;
+        }
+
+        public Course(string _id, string _name)
+        {
+            CourseId = _id;
+            Name = _name;
+            Teaching = new Teacher();
+            StudentsAttending = new List<Student>();
+            Assignments = new List<Assignment>();
         }
 
     }

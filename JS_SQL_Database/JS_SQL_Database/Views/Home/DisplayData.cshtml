@@ -19,35 +19,33 @@
 
 
         @using (Ajax.BeginForm("RequestData", "Home", new AjaxOptions
-    {
+        {
 
-        UpdateTargetId = "outputfield",
-        HttpMethod = "POST",
-        InsertionMode = InsertionMode.Replace
-    }))
+            UpdateTargetId = "outputfield",
+            HttpMethod = "POST",
+            InsertionMode = InsertionMode.Replace
+        }))
 
-    {
-        <input type="submit" class="btn btn-default" name="pressedButton" value="Students" />
-        <input type="submit" class="btn btn-default" name="pressedButton" value="Courses" />
-        <input type="submit" class="btn btn-default" name="pressedButton" value="Teachers" />
-        <input type="submit" class="btn btn-default" name="pressedButton" value="Assignments" />
-}
-
+        {
+            <input type="submit" class="btn btn-default" name="pressedButton" value="Students" />
+            <input type="submit" class="btn btn-default" name="pressedButton" value="Courses" />
+            <input type="submit" class="btn btn-default" name="pressedButton" value="Teachers" />
+            <input type="submit" class="btn btn-default" name="pressedButton" value="Assignments" />
 
 
+            <hr />
+
+            <label for="filter">Show student and assignments by #Id:</label>
+            <input type="text" class="form-control" name="studentId">
+            <input type="submit" class="btn btn-default" name="pressedButton" value="Show Student" />
 
 
-
-
-    </div>
-
-
-
-
-
-
-
-
-
+        }
 
     </div>
+    
+
+</div>
+
+
+@*To do: Add functions to show data for a course (assignments, students, teacher) and for an assignment (course, students)*@

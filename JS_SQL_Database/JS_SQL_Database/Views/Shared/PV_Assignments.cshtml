@@ -1,0 +1,25 @@
+﻿@model List<JS_SQL_Database.Models.Assignment>
+@using JS_SQL_Database.Models
+
+
+<div class="col-lg-8 col-md-8">
+
+    <span class="col-lg-3 col-md-3">Assignment Id</span>
+    <span class="col-lg-3 col-md-3">Field</span>
+    <span class="col-lg-5 col-md-5">Assignment Name</span>
+
+</div>
+
+<hr />
+@{
+    foreach (Assignment a in Model)
+    {
+
+        <div class="col-lg-8 col-md-8">
+            <br />
+            <span class="col-lg-3 col-md-3" id="id">@a.Id</span>
+            <span class="col-lg-3 col-md-3" id="name">@a.Field</span>
+            <span class="col-lg-5 col-md-3" id="name">@a.Name</span>
+        </div>
+    }
+}
