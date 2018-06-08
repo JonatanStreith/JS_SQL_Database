@@ -229,7 +229,7 @@ namespace JS_SQL_Database.Controllers
                 }
             }
 
-            else if(pressedButton == "All data")
+            else if (pressedButton == "All data")
             {
                 var cour = context.Courses.Include("Assignments").Include("StudentsAttending").Include("Teaching").ToList();
                 int cid;
@@ -339,14 +339,14 @@ namespace JS_SQL_Database.Controllers
 
             if (context.Teachers.ToList().Exists(x => x.Name.Equals(teacher)))
             {
-                context.Courses.Add(new Course(courseid, name, context.Teachers.ToList().Find(x => x.Name.Equals(teacher)), context.Assignments.ToList().FindAll(x => x.Field.Equals(name))) );
+                context.Courses.Add(new Course(courseid, name, context.Teachers.ToList().Find(x => x.Name.Equals(teacher)), context.Assignments.ToList().FindAll(x => x.Field.Equals(name))));
             }
 
 
             else if (context.Teachers.ToList().Exists(x => x.Id.Equals(tid)))
             {
                 context.Courses.Add(new Course(courseid, name, context.Teachers.ToList().Find(x => x.Name.Equals(teacher)), context.Assignments.ToList().FindAll(x => x.Field.Equals(name))));
-            }      
+            }
             else
             {
 
@@ -388,7 +388,7 @@ namespace JS_SQL_Database.Controllers
 
             if (cour.Assignments != null)
             {
-            stu.ListOfAssignments.AddRange(cour.Assignments);
+                stu.ListOfAssignments.AddRange(cour.Assignments);
             }
 
             cour.StudentsAttending.Add(stu); //This adds the student to the course's StudentsAttending
@@ -411,9 +411,9 @@ namespace JS_SQL_Database.Controllers
 
             cour.Assignments.Add(ass);
             ass.BelongsToCourse = cour;
+            ass.Field = cour.Name;
 
-
-            foreach(Student stu in cour.StudentsAttending)
+            foreach (Student stu in cour.StudentsAttending)
             {
                 stu.ListOfAssignments.Add(ass);
             }
@@ -439,6 +439,256 @@ namespace JS_SQL_Database.Controllers
 
 
         }
+
+
+
+
+
+        public ActionResult RemoveData()
+        {
+
+
+            return View();
+        }
+
+
+        [HttpPost]
+        public ActionResult RemoveStudent(int id, string button)
+        {
+            if (button == "Remove")
+            {
+                context.Students.Remove(context.Students.Find(id));
+            }
+            else if (button == "Remove all")
+            {
+                foreach (Student stu in context.Students)
+                {
+                    context.Students.Remove(stu);
+                }
+            }
+            else { }
+
+            context.SaveChanges();
+
+            return View("RemoveData");
+        }
+
+
+        [HttpPost]
+        public ActionResult RemoveTeacher(int id, string button)
+        {
+            if (button == "Remove")
+            {
+                foreach (Course cour in context.Courses.Include("Teaching"))  //Must remove all references to this object
+                {
+                    if ((cour.Teaching != null) && (cour.Teaching.Id.Equals(id)))
+                    {
+                        cour.Teaching = null;
+                    }
+
+                }
+
+
+                context.Teachers.Remove(context.Teachers.Find(id));
+
+
+
+
+            }
+            else if (button == "Remove all")
+            {
+                foreach (Teacher tea in context.Teachers)
+                {
+
+                    foreach (Course cour in context.Courses.Include("Teaching"))  //Must remove all references to this object
+                    {
+                        if ((cour.Teaching != null) && (cour.Teaching.Id.Equals(tea.Id)))
+                        {
+                            cour.Teaching = null;
+                        }
+
+                    }
+
+
+
+
+
+                    context.Teachers.Remove(tea);
+                }
+
+
+
+            }
+            else { }
+
+            context.SaveChanges();
+
+            return View("RemoveData");
+        }
+
+        [HttpPost]
+        public ActionResult RemoveAssignment(int id, string button)
+        {
+            if (button == "Remove")
+            {
+                context.Assignments.Remove(context.Assignments.Find(id));
+            }
+            else if (button == "Remove all")
+            {
+                foreach (Assignment ass in context.Assignments)
+                {
+                    context.Assignments.Remove(ass);
+                }
+            }
+            else { }
+
+            context.SaveChanges();
+
+            return View("RemoveData");
+        }
+
+
+        [HttpPost]
+        public ActionResult RemoveCourse(int id, string button)
+        {
+            if (button == "Remove")
+            {
+                context.Courses.Remove(context.Courses.Find(id));
+            }
+            else if (button == "Remove all")
+            {
+                foreach (Course cour in context.Courses)
+                {
+                    context.Courses.Remove(cour);
+                }
+            }
+            else { }
+
+            context.SaveChanges();
+
+            return View("RemoveData");
+        }
+
+
+
+
+
+
+
+
+        [HttpPost]
+        public ActionResult UnassignStudentFromCourse(string student, string course)
+        {
+
+            var stu = context.Students.Include("ListOfCourses").Include("ListOfAssignments").ToList().Find(x => x.Id.Equals(Convert.ToInt32(student)));
+
+            var cour = context.Courses.Include("StudentsAttending").Include("Assignments").ToList().Find(x => x.Id.Equals(Convert.ToInt32(course)));
+
+
+
+            if ((stu != null) && (cour != null))
+            {
+                if (stu.ListOfCourses.Contains(cour))
+                {
+                    stu.ListOfCourses.Remove(cour);
+                }
+
+                if (cour.Assignments != null)
+                {
+                    for (int i = 0; i < cour.Assignments.Count; i++)
+                    {
+                        for (int j = 0; j < stu.ListOfAssignments.Count; j++)
+                        {
+                            if (cour.Assignments[i].Equals(stu.ListOfAssignments[j]))
+                            {
+                                stu.ListOfAssignments.Remove(stu.ListOfAssignments[j]);
+                            }
+                        }
+                    }
+                }
+
+                cour.StudentsAttending.Remove(stu); //This removes the student from the course's StudentsAttending
+
+
+
+                context.SaveChanges();
+
+
+
+            }
+            return View("EnterData");
+
+        }
+
+
+        [HttpPost]
+        public ActionResult UnassignAssignmentFromCourse(string assignment, string course)
+        {
+
+            var ass = context.Assignments.Include("BelongsToCourse").Include("StudentsWorking").ToList().Find(x => x.Id.Equals(Convert.ToInt32(assignment)));
+
+            var cour = context.Courses.Include("StudentsAttending").Include("Assignments").ToList().Find(x => x.Id.Equals(Convert.ToInt32(course)));
+
+
+
+            if ((ass != null) && (cour != null))
+            {
+
+                foreach (Student stu in cour.StudentsAttending)
+                {
+
+                    if (stu.ListOfAssignments.Contains(ass))
+                    {
+                        stu.ListOfAssignments.Remove(ass);
+                    }
+                }
+
+
+                if (cour.Assignments.Contains(ass))
+                {
+                    cour.Assignments.Remove(ass);
+                }
+                ass.BelongsToCourse = null;
+                ass.Field = null;
+
+
+                context.SaveChanges();
+            }
+            return View("EnterData");
+
+
+        }
+
+        [HttpPost]
+        public ActionResult UnassignTeacherFromCourse(string course)
+        {
+            //var tea = context.Teachers.ToList().Find(x => x.Id.Equals(Convert.ToInt32(teacher)));
+            var cour = context.Courses.Include("Teaching").ToList().Find(x => x.Id.Equals(Convert.ToInt32(course)));
+
+
+            if (cour != null)
+            {
+                cour.Teaching = null;
+
+                context.SaveChanges();
+            }
+
+            return View("EnterData");
+
+
+        }
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

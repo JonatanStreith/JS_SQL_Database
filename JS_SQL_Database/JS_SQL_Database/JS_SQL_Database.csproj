@@ -126,7 +126,6 @@
     <Compile Include="Models\DataHandler.cs" />
     <Compile Include="Models\DisplayData.cs" />
     <Compile Include="Models\SchoolContext.cs" />
-    <Compile Include="Models\SchoolData.cs" />
     <Compile Include="Models\Student.cs" />
     <Compile Include="Models\Teacher.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -154,6 +153,7 @@
     <Content Include="Views\Shared\PV_SpecificCourseAssignments.cshtml" />
     <Content Include="Views\Shared\PV_SpecificCourseStudents.cshtml" />
     <Content Include="Views\Shared\PV_AllData.cshtml" />
+    <Content Include="Views\Home\RemoveData.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
