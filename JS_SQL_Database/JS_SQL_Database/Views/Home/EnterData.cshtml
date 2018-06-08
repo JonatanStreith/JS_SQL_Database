@@ -63,33 +63,6 @@
 
     <hr />
 
-    <div class="col-lg-12 col-md-12" id="Add_courses">
-
-        @using (Ajax.BeginForm("AddCourse", "Home", new AjaxOptions
-        {
-
-            HttpMethod = "POST"
-        }))
-        {
-            <label>Add course to database:</label>
-            <div class="form-group">
-                <label for="name">Course Id:</label>
-                <input type="text" class="form-control" id="_courseid" name="courseid">
-                <label for="name">Name:</label>
-                <input type="text" class="form-control" id="_name" name="name">
-
-
-                <input type="submit" class="btn btn-default" value="Add">
-
-            </div>
-        }
-
-
-
-    </div>
-
-    <hr />
-
     <div class="col-lg-12 col-md-12" id="Add_assignments">
 
         @using (Ajax.BeginForm("AddAssignment", "Home", new AjaxOptions
@@ -114,7 +87,70 @@
 
     </div>
 
+
+    <hr />
+
+    <div class="col-lg-12 col-md-12" id="Add_courses">
+
+        @using (Ajax.BeginForm("AddCourse", "Home", new AjaxOptions
+        {
+
+            HttpMethod = "POST"
+        }))
+        {
+            <label>Add course to database:</label>
+            <div class="form-group">
+                <label for="name">Course Id:</label>
+                <input type="text" class="form-control" id="_courseid" name="courseid">
+                <label for="name">Name:</label>
+                <input type="text" class="form-control" id="_name" name="name">
+
+
+                <input type="submit" class="btn btn-default" value="Add">
+
+            </div>
+        }
+    </div>
+
+    <div class="col-lg-12 col-md-12" id="Add_complete_courses">
+
+        @using (Ajax.BeginForm("AddFullCourse", "Home", new AjaxOptions
+        {
+
+            HttpMethod = "POST"
+        }))
+        {
+            <label>Add complete course to database:</label>
+            <div class="form-group">
+                <label for="name">Course Id:</label>
+                <input type="text" class="form-control" id="_courseid" name="courseid">
+                <label for="name">Name:</label>
+                <input type="text" class="form-control" id="_name" name="name">
+                <label for="name">Teacher Id or name:</label>
+                <input type="text" class="form-control" id="_teacher" name="teacher">
+
+
+                <input type="submit" class="btn btn-default" value="Add">
+
+            </div>
+        }
+    </div>
+
+
 </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 <div class="col-lg-6 col-md-6" id="Assign_data">
 
@@ -126,7 +162,7 @@
             HttpMethod = "POST"
         }))
         {
-        <label>Assign student to course:</label>
+            <label>Assign student to course:</label>
             <div class="form-group">
                 <label for="name">Student Id:</label>
                 <input type="text" class="form-control" id="_name" name="student">
@@ -134,13 +170,57 @@
                 <input type="text" class="form-control" id="_field" name="course">
 
 
-                <input type="submit" class="btn btn-default" value="Add">
+                <input type="submit" class="btn btn-default" value="Assign">
 
             </div>
         }
-
-
-
-
     </div>
+
+
+    <div class="col-lg-12 col-md-12" id="Assign assignment to course">
+
+        @using (Ajax.BeginForm("AssignAssignmentToCourse", "Home", new AjaxOptions
+        {
+            HttpMethod = "POST"
+        }))
+        {
+            <label>Assign assignment to course:</label>
+            <div class="form-group">
+                <label for="name">Assignment Id:</label>
+                <input type="text" class="form-control" id="_name" name="assignment">
+                <label for="name">Course Id:</label>
+                <input type="text" class="form-control" id="_field" name="course">
+
+                <input type="submit" class="btn btn-default" value="Assign">
+
+            </div>
+        }
     </div>
+
+    <div class="col-lg-12 col-md-12" id="Assign teacher to course">
+
+        @using (Ajax.BeginForm("AssignTeacherToCourse", "Home", new AjaxOptions
+        {
+            HttpMethod = "POST"
+        }))
+        {
+            <label>Assign teacher to course:</label>
+            <div class="form-group">
+                <label for="name">Teacher Id:</label>
+                <input type="text" class="form-control" id="_name" name="teacher">
+                <label for="name">Course Id:</label>
+                <input type="text" class="form-control" id="_field" name="course">
+
+                <input type="submit" class="btn btn-default" value="Assign">
+
+            </div>
+        }
+    </div>
+
+
+
+
+
+
+
+</div>

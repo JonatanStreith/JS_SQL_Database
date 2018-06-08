@@ -33,6 +33,17 @@ namespace JS_SQL_Database.Models
             Assignments = _assignments;
         }
 
+
+        public Course(string _id, string _name, Teacher _teaching)
+        {
+            CourseId = _id;
+            Name = _name;
+            Teaching = _teaching;
+            StudentsAttending = new List<Student>();
+            Assignments = new List<Assignment>();
+        }
+
+
         public Course(string _id, string _name)
         {
             CourseId = _id;

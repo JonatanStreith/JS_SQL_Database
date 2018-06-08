@@ -153,6 +153,7 @@
     <Content Include="Views\Shared\DataNotFound.cshtml" />
     <Content Include="Views\Shared\PV_SpecificCourseAssignments.cshtml" />
     <Content Include="Views\Shared\PV_SpecificCourseStudents.cshtml" />
+    <Content Include="Views\Shared\PV_AllData.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

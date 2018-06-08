@@ -229,6 +229,43 @@ namespace JS_SQL_Database.Controllers
                 }
             }
 
+            else if(pressedButton == "All data")
+            {
+                var cour = context.Courses.Include("Assignments").Include("StudentsAttending").Include("Teaching").ToList();
+                int cid;
+                bool result = Int32.TryParse(courseId, out cid);
+
+
+
+                if (result == true)//courseId is a number
+                {
+                    if (cour.Exists(x => x.Id.Equals(cid)))
+                    {
+                        return PartialView("PV_AllData", cour.FirstOrDefault(x => x.Id.Equals(cid)));
+                    }
+                    else
+                    {
+                        return PartialView("DataNotFound");
+                    }
+                }
+                else          //courseId is not a number, maybe a word
+                {
+                    if (cour.Exists(x => x.Name.Equals(courseId)))
+                    {
+                        return PartialView("PV_AllData", cour.FirstOrDefault(x => x.Name.Equals(courseId)));
+                    }
+                    else
+                    {
+                        return PartialView("DataNotFound");
+                    }
+
+                }
+
+
+
+
+            }
+
 
             else
             {
@@ -290,6 +327,42 @@ namespace JS_SQL_Database.Controllers
             return View("EnterData");
         }
 
+
+
+        [HttpPost]
+        public ActionResult AddFullCourse(string courseid, string name, string teacher)
+        {
+
+            int tid;
+            bool result = Int32.TryParse(teacher, out tid);
+
+
+            if (context.Teachers.ToList().Exists(x => x.Name.Equals(teacher)))
+            {
+                context.Courses.Add(new Course(courseid, name, context.Teachers.ToList().Find(x => x.Name.Equals(teacher)), context.Assignments.ToList().FindAll(x => x.Field.Equals(name))) );
+            }
+
+
+            else if (context.Teachers.ToList().Exists(x => x.Id.Equals(tid)))
+            {
+                context.Courses.Add(new Course(courseid, name, context.Teachers.ToList().Find(x => x.Name.Equals(teacher)), context.Assignments.ToList().FindAll(x => x.Field.Equals(name))));
+            }      
+            else
+            {
+
+                return Content("<script language='javascript' type='text/javascript'>alert('Failed!');</script>");
+            }
+
+
+            context.SaveChanges();
+
+            return View("EnterData");
+        }
+
+
+
+
+
         [HttpPost]
         public ActionResult AddAssignment(string name, string field)
         {
@@ -313,10 +386,10 @@ namespace JS_SQL_Database.Controllers
             stu.ListOfCourses.Add(cour); //This adds the course to the student's ListOfCourses
 
 
-            //if (cour.Assignments != null)
-            //{
+            if (cour.Assignments != null)
+            {
             stu.ListOfAssignments.AddRange(cour.Assignments);
-            //}
+            }
 
             cour.StudentsAttending.Add(stu); //This adds the student to the course's StudentsAttending
 
@@ -327,6 +400,46 @@ namespace JS_SQL_Database.Controllers
             return View("EnterData");
 
         }
+
+
+        [HttpPost]
+        public ActionResult AssignAssignmentToCourse(string assignment, string course)
+        {
+            var ass = context.Assignments.Include("BelongsToCourse").Include("StudentsWorking").ToList().Find(x => x.Id.Equals(Convert.ToInt32(assignment)));
+
+            var cour = context.Courses.Include("StudentsAttending").Include("Assignments").ToList().Find(x => x.Id.Equals(Convert.ToInt32(course)));
+
+            cour.Assignments.Add(ass);
+            ass.BelongsToCourse = cour;
+
+
+            foreach(Student stu in cour.StudentsAttending)
+            {
+                stu.ListOfAssignments.Add(ass);
+            }
+
+            context.SaveChanges();
+
+            return View("EnterData");
+
+
+        }
+
+        [HttpPost]
+        public ActionResult AssignTeacherToCourse(string teacher, string course)
+        {
+            var tea = context.Teachers.ToList().Find(x => x.Id.Equals(Convert.ToInt32(teacher)));
+            var cour = context.Courses.Include("Teaching").ToList().Find(x => x.Id.Equals(Convert.ToInt32(course)));
+
+            cour.Teaching = tea;
+
+            context.SaveChanges();
+
+            return View("EnterData");
+
+
+        }
+
 
 
     }
