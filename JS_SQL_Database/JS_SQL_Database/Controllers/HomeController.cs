@@ -27,7 +27,7 @@ namespace JS_SQL_Database.Controllers
         {
             return View();
         }
-   
+
         [HttpPost]
         public ActionResult ClearDatabase()
         {
@@ -56,45 +56,185 @@ namespace JS_SQL_Database.Controllers
         }
 
         [HttpPost]
-        public ActionResult RequestData(string pressedButton, string studentId)
+        public ActionResult RequestData(string pressedButton, string studentId, string courseId)
         {
 
-            
-                if (pressedButton == "Students")
-                {
-                    return PartialView("PV_Students", context.Students.ToList());
-                }
 
-                else if (pressedButton == "Teachers")
-                {
-                    return PartialView("PV_Teachers", context.Teachers.ToList());
-                }
-                
-                else if (pressedButton == "Assignments")
-                {
-                    return PartialView("PV_Assignments", context.Assignments.ToList());
-                }
-
-                else if (pressedButton == "Courses")
-                {
-                    return PartialView("PV_Courses", context.Courses.Include("Teaching").ToList());
-                }
-
-                else if (pressedButton == "Show Student")
+            if (pressedButton == "All students")
             {
+                return PartialView("PV_Students", context.Students.ToList());
+            }
 
+            else if (pressedButton == "All teachers")
+            {
+                return PartialView("PV_Teachers", context.Teachers.ToList());
+            }
 
+            else if (pressedButton == "All assignments")
+            {
+                return PartialView("PV_Assignments", context.Assignments.ToList());
+            }
 
-                return PartialView("PV_SpecificStudent", context.Students.Include("ListOfAssignments").ToList().Find(x => x.Id.Equals(Convert.ToInt32(studentId))));
+            else if (pressedButton == "All courses")
+            {
+                return PartialView("PV_Courses", context.Courses.Include("Teaching").ToList());
             }
 
 
 
+
+
+
+
+            else if (pressedButton == "Student assignments")
+            {
+                var stu = context.Students.Include("ListOfAssignments").ToList();
+                int sid;
+                bool result = Int32.TryParse(studentId, out sid);
+
+
+
+
+                if (result == true)// is a number
+                {
+
+                    if (stu.Exists(x => x.Id.Equals(sid)))
+                    {
+                        return PartialView("PV_SpecificStudentAssignments", stu.Find(x => x.Id.Equals(sid)));
+                    }
+                    else
+                    {
+                        return PartialView("DataNotFound");
+                    }
+                }
                 else
                 {
-                    return View("DisplayData");
+
+                    if (stu.Exists(x => x.Name.Equals(studentId)))
+                    {
+                        return PartialView("PV_SpecificStudentAssignments", stu.Find(x => x.Name.Equals(studentId)));
+                    }
+                    else
+                    {
+                        return PartialView("DataNotFound");
+                    }
+
+
                 }
-            
+            }
+
+            else if (pressedButton == "Student courses")
+            {
+                var stu = context.Students.Include("ListOfCourses").ToList();
+                int sid;
+                bool result = Int32.TryParse(studentId, out sid);
+
+
+                if (result == true)// is a number
+                {
+
+                    if (stu.Exists(x => x.Id.Equals(sid)))
+                    {
+                        return PartialView("PV_SpecificStudentCourses", stu.Find(x => x.Id.Equals(sid)));
+                    }
+                    else
+                    {
+                        return PartialView("DataNotFound");
+                    }
+                }
+                else
+                {
+                    if (stu.Exists(x => x.Name.Equals(studentId)))
+                    {
+                        return PartialView("PV_SpecificStudentCourses", stu.Find(x => x.Name.Equals(studentId)));
+                    }
+                    else
+                    {
+                        return PartialView("DataNotFound");
+                    }
+
+
+
+                }
+            }
+
+            else if (pressedButton == "Students attending")
+            {
+
+                var cour = context.Courses.Include("StudentsAttending").ToList();
+                int cid;
+                bool result = Int32.TryParse(courseId, out cid);
+
+
+                if (result == true)//courseId is a number
+                {
+                    if (cour.Exists(x => x.Id.Equals(cid)))
+                    {
+                        return PartialView("PV_SpecificCourseStudents", cour.Find(x => x.Id.Equals(cid)));
+                    }
+                    else
+                    {
+                        return PartialView("DataNotFound");
+                    }
+                }
+                else //courseId is not a number, maybe a word
+                {
+
+                    if (cour.Exists(x => x.Name.Equals(courseId)))
+                    {
+                        return PartialView("PV_SpecificCourseStudents", cour.Find(x => x.Name.Equals(courseId)));
+                    }
+                    else
+                    {
+                        return PartialView("DataNotFound");
+                    }
+
+
+
+
+
+                }
+            }
+
+            else if (pressedButton == "Required assignments")
+            {
+
+                var cour = context.Courses.Include("Assignments").ToList();
+                int cid;
+                bool result = Int32.TryParse(courseId, out cid);
+
+
+                if (result == true)//courseId is a number
+                {
+                    if (cour.Exists(x => x.Id.Equals(cid)))
+                    {
+                        return PartialView("PV_SpecificCourseAssignments", cour.FirstOrDefault(x => x.Id.Equals(cid)));
+                    }
+                    else
+                    {
+                        return PartialView("DataNotFound");
+                    }
+                }
+                else          //courseId is not a number, maybe a word
+                {
+                    if (cour.Exists(x => x.Name.Equals(courseId)))
+                    {
+                        return PartialView("PV_SpecificCourseAssignments", cour.FirstOrDefault(x => x.Name.Equals(courseId)));
+                    }
+                    else
+                    {
+                        return PartialView("DataNotFound");
+                    }
+
+                }
+            }
+
+
+            else
+            {
+                return PartialView("DataNotFound");
+            }
+
         }
 
 
@@ -143,7 +283,7 @@ namespace JS_SQL_Database.Controllers
         [HttpPost]
         public ActionResult AddCourse(string courseid, string name)
         {
-            context.Courses.Add(new Course(courseid, name) );
+            context.Courses.Add(new Course(courseid, name));
 
             context.SaveChanges();
 
@@ -153,7 +293,7 @@ namespace JS_SQL_Database.Controllers
         [HttpPost]
         public ActionResult AddAssignment(string name, string field)
         {
-            context.Assignments.Add(new Assignment {Name = name, Field = field });
+            context.Assignments.Add(new Assignment { Name = name, Field = field });
 
             context.SaveChanges();
 
@@ -165,13 +305,24 @@ namespace JS_SQL_Database.Controllers
         [HttpPost]
         public ActionResult AssignStudentToCourse(string student, string course)
         {
+            var stu = context.Students.Include("ListOfCourses").Include("ListOfAssignments").ToList().Find(x => x.Id.Equals(Convert.ToInt32(student)));
 
-            context.Students.Find(Convert.ToInt32(student)).ListOfCourses.Add(context.Courses.Find(Convert.ToInt32(course))); //This adds the course to the student's ListOfCourses
+            var cour = context.Courses.Include("StudentsAttending").Include("Assignments").ToList().Find(x => x.Id.Equals(Convert.ToInt32(course)));
 
-            context.Students.Find(Convert.ToInt32(student)).ListOfAssignments.AddRange(context.Courses.Find(Convert.ToInt32(course)).Assignments);
 
-            context.Courses.Find(Convert.ToInt32(course)).StudentsAttending.Add(context.Students.Find(Convert.ToInt32(course))); //This adds the student to the course's StudentsAttending
+            stu.ListOfCourses.Add(cour); //This adds the course to the student's ListOfCourses
 
+
+            //if (cour.Assignments != null)
+            //{
+            stu.ListOfAssignments.AddRange(cour.Assignments);
+            //}
+
+            cour.StudentsAttending.Add(stu); //This adds the student to the course's StudentsAttending
+
+
+
+            context.SaveChanges();
 
             return View("EnterData");
 

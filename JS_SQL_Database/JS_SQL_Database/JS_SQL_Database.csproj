@@ -147,8 +147,12 @@
     <Content Include="Views\Shared\PV_Courses.cshtml" />
     <Content Include="Views\Shared\PV_Assignments.cshtml" />
     <Content Include="Views\Shared\PV_Students.cshtml" />
-    <Content Include="Views\Shared\PV_SpecificStudent.cshtml" />
+    <Content Include="Views\Shared\PV_SpecificStudentAssignments.cshtml" />
     <Content Include="Views\Home\Cheat.cshtml" />
+    <Content Include="Views\Shared\PV_SpecificStudentCourses.cshtml" />
+    <Content Include="Views\Shared\DataNotFound.cshtml" />
+    <Content Include="Views\Shared\PV_SpecificCourseAssignments.cshtml" />
+    <Content Include="Views\Shared\PV_SpecificCourseStudents.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

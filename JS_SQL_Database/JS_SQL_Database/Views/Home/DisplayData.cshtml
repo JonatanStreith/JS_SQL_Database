@@ -4,7 +4,7 @@
     ViewBag.Title = "DisplayData";
 }
 
-<h2>DisplayData</h2>
+<h2>Display School Data</h2>
 
 <div class="row wrapper">
 
@@ -19,28 +19,44 @@
 
 
         @using (Ajax.BeginForm("RequestData", "Home", new AjaxOptions
-        {
+    {
 
-            UpdateTargetId = "outputfield",
-            HttpMethod = "POST",
-            InsertionMode = InsertionMode.Replace
-        }))
+        UpdateTargetId = "outputfield",
+        HttpMethod = "POST",
+        InsertionMode = InsertionMode.Replace
+    }))
 
-        {
-            <input type="submit" class="btn btn-default" name="pressedButton" value="Students" />
-            <input type="submit" class="btn btn-default" name="pressedButton" value="Courses" />
-            <input type="submit" class="btn btn-default" name="pressedButton" value="Teachers" />
-            <input type="submit" class="btn btn-default" name="pressedButton" value="Assignments" />
-
-
-            <hr />
-
-            <label for="filter">Show student and assignments by #Id:</label>
-            <input type="text" class="form-control" name="studentId">
-            <input type="submit" class="btn btn-default" name="pressedButton" value="Show Student" />
+    {
+        <input type="submit" class="btn btn-default" name="pressedButton" value="All students" />
+        <input type="submit" class="btn btn-default" name="pressedButton" value="All courses" />
+        <input type="submit" class="btn btn-default" name="pressedButton" value="All teachers" />
+        <input type="submit" class="btn btn-default" name="pressedButton" value="All assignments" />
 
 
-        }
+        <hr />
+        <label for="filter">Show student data</label><br />
+        <label for="filter">Student id:</label>
+
+        <input type="text" class="form-control" name="studentId">
+
+        <input type="submit" class="btn btn-default" name="pressedButton" value="Student assignments" />
+        <input type="submit" class="btn btn-default" name="pressedButton" value="Student courses" />
+
+        <hr />
+
+        <label for="filter">Show course data</label><br />
+        <label for="filter">Course id:</label>
+
+        <input type="text" class="form-control" name="courseId">
+
+        <input type="submit" class="btn btn-default" name="pressedButton" value="Students attending" />
+        <input type="submit" class="btn btn-default" name="pressedButton" value="Required assignments" />
+
+
+
+
+
+}
 
     </div>
     
